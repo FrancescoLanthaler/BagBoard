@@ -21,13 +21,24 @@ def invert_colors():
 
 displayio.release_displays()
 
-# Create an I2C stuff
+
+## CONFIGURATION ##
+# Keys
+keys_pressed = [Keycode.TWO, "hellofahter", Keycode.A, Keycode.FOUR, Keycode.FIVE, Keycode.SIX, Keycode.B, Keycode.SEVEN, Keycode.EIGHT, Keycode.NINE, Keycode.C, Keycode.PERIOD, Keycode.ZERO, Keycode.ENTER, Keycode.D]
+rotary_pressed = ConsumerControlCode.PLAY_PAUSE
+
+# Animation
+FRAMES = 9
+IMAGE_FILE = "/icons/icon_9_frames.bmp".format(0)
+
+## END CONFIGURATION ##
+
+# Create I2C things
 i2c = busio.I2C(board.SCL, board.SDA)
 display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
 display = adafruit_displayio_ssd1306.SSD1306(display_bus, width=128, height=64)
 mcp = MCP23017(i2c)
 encoder = rotaryio.IncrementalEncoder(board.D0, board.D1)
-
 
 # Rotary Encoder Button
 button = digitalio.DigitalInOut(board.D2)
@@ -40,11 +51,8 @@ last_position = encoder.position
 # Array of key objects
 keypress_pins = [mcp.get_pin(i) for i in range(2, 16)] + [mcp.get_pin(0)]
 key_pin_array = []
-keys_pressed = [Keycode.TWO, "hellofahter", Keycode.A, Keycode.FOUR, Keycode.FIVE, Keycode.SIX, Keycode.B, Keycode.SEVEN, Keycode.EIGHT, Keycode.NINE, Keycode.C, Keycode.PERIOD, Keycode.ZERO, Keycode.ENTER, Keycode.D]
-control_key = Keycode.SHIFT
 
 time.sleep(1)  # Sleep for a bit to avoid a race condition on some systems
-
 
 # Create a keyboard object
 keyboard = Keyboard(usb_hid.devices)
@@ -57,15 +65,11 @@ for pin in keypress_pins:
     pin.pull = digitalio.Pull.UP
     key_pin_array.append(pin)
 
-
-
 # Initialize key states to False
 key_state = [False] * len(key_pin_array)
 
 # Converted bitmap file - SPRITE Sheet image
-IMAGE_FILE = "/icons/icon_9_frames.bmp".format(0)
 SPRITE_SIZE = (64, 64)
-FRAMES = 9
 
 group = displayio.Group()
 
@@ -122,7 +126,7 @@ while True:
         button_state = "pressed"
     if button.value and button_state == "pressed":
         print("Button pressed.")
-        consumer.send(ConsumerControlCode.PLAY_PAUSE)
+        consumer.send(rotary_pressed)
         button_state = None
 
     # Keyboard
