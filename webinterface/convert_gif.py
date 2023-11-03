@@ -11,9 +11,17 @@ OUTPUT_SIZE = (64,64) # The output size of each frame (or tile or Sprite) of the
 MONOCHROME = True # Do you want the output file to be b/w?
 
 async def _upload_change_and_show(e):
-    #Get the first file from upload
-    file_list = e.target.files
-    first_item = file_list.item(0)
+    #Get the first file from uploaded files
+
+    if e.target.files:
+        file_list = e.target.files
+        first_item = file_list.item(0)
+
+    url = document.getElementById("gif-url").value
+    if url:
+        first_item = await window.fetch(url)
+    else:
+        first_item = first_item
 
     #Get the data from the files arrayBuffer as an array of unsigned bytes
     array_buf = Uint8Array.new(await first_item.arrayBuffer())
@@ -56,15 +64,16 @@ async def _upload_change_and_show(e):
     #Create a JS File object with our data and the proper mime type
     image_file = File.new([Uint8Array.new(my_stream.getvalue())], output_filename, {type: "image/bmp"})
 
-    #Create new tag and insert into page
-    new_image = document.createElement('img')
-    new_image.src = window.URL.createObjectURL(image_file)
-    document.getElementById("output_upload_pillow").appendChild(new_image)
-
     download_link = document.getElementById("download_link")
     download_link.href = window.URL.createObjectURL(image_file)
     download_link.download = output_filename  # Set the 'download' attribute
-    download_link.innerText = 'Download Image'  # You can customize the link text
+
+    display = document.getElementById("display_image")
+
+    if url:
+        display.src = url
+    else:
+        display.src = window.URL.createObjectURL(first_item)
 
     # Show the download button
     download_link.classList.remove("download_hidden")
@@ -75,7 +84,9 @@ async def _upload_change_and_show(e):
     codestring += f"IMAGE_FILE = \"/icons/{output_filename}\".format(0)\n"
 
     document.getElementById("imagecode").innerText = codestring
+    document.getElementById("anim_code").classList.remove("hidden")
 
 # Run image processing code above whenever file is uploaded    
 upload_file = create_proxy(_upload_change_and_show)
 document.getElementById("file-upload-pillow").addEventListener("change", upload_file)
+document.getElementById("gif-url").addEventListener("input", upload_file)
