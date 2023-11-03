@@ -40,7 +40,7 @@ rotary_pressed = ConsumerControlCode.PLAY_PAUSE
 
 # Animation
 FRAMES = 9
-IMAGE_FILE = "/icons/icon_9_frames.bmp".format(0)
+IMAGE_FILE = "/icons/icon_9_frames.bmp"
 
 ## END CONFIGURATION ##
 
