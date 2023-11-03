@@ -25,8 +25,8 @@ async def _upload_change_and_show(e):
 
     #Create PIL image from np array
     for file in listdir():
-        print(f"Size: {gif.size}")
-        print(f"Frames: {gif.n_frames}")
+        # print(f"Size: {gif.size}")
+        # print(f"Frames: {gif.n_frames}")
 
         if MONOCHROME:
             output = Image.new("1", (OUTPUT_SIZE[0] * gif.n_frames, OUTPUT_SIZE[1]), 0)
@@ -45,8 +45,10 @@ async def _upload_change_and_show(e):
             output = output.convert("P", colors = 8)
         output.save(output_filename)
 
+
     #Log some of the image data for testing
-    console.log(f"{gif.format= } {gif.width= } {gif.height= }")
+    # console.log(f"{gif.format= } {gif.width= } {gif.height= }")
+    # console.log(f"{gif.n_frames= } {gif.is_animated= } {gif.info= }")
 
     #Convert Pillow object array back into File type that createObjectURL will take
     my_stream = io.BytesIO()
@@ -66,6 +68,13 @@ async def _upload_change_and_show(e):
 
     # Show the download button
     download_link.classList.remove("download_hidden")
+
+    # Output Code
+
+    codestring = f"FRAMES = {gif.n_frames}\n"
+    codestring += f"IMAGE_FILE = \"/icons/{output_filename}\".format(0)\n"
+
+    document.getElementById("imagecode").innerText = codestring
 
 # Run image processing code above whenever file is uploaded    
 upload_file = create_proxy(_upload_change_and_show)

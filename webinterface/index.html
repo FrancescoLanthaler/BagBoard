@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>UniQue page title - My Site</title>
+  <title>The Ultimate Macropad Maker</title>
 
   <script type="module">
     document.documentElement.classList.remove('no-js');
@@ -19,14 +19,14 @@
     packages = ["Pillow", "matplotlib"]
   </py-config>
 
-  <!-- Insert boilerplate stuff here -->
+  
 </head>
 
 <body>
 
   <h1> Plotting a graph </h1>
   <div id="lineplot"> </div>
-  <label for="Upload a PNG image"></label><input type="file" id="file-upload-pillow">
+  <label for="file-upload-pillow">Upload a GIF</label><input type="file" id="file-upload-pillow">
   <div id="output_upload_pillow">
     <img id="animation_image" src="">
     <a id="download_link" class="download_hidden" href="#">Download</a>
@@ -68,9 +68,13 @@
     </div>
 
     <a class="button">Generate</a>
-    <div>
-      <code class="code">hello</code>
+    <div class="code_box">
+      <code id="imagecode" class="code"></code>
     </div>
+    <div class="code_box">
+      <code id="keycode" class="code"></code>
+    </div>
+
   </main>
 
 

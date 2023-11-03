@@ -2,7 +2,7 @@
 const keys = document.querySelectorAll('.keyboard_key');
 const rotary = document.querySelector('.rotary');
 const button = document.querySelector('.button');
-const code = document.querySelector('.code');
+const code = document.getElementById('keycode');
 
 // Add an event listener to each key
 keys.forEach(key => {
@@ -249,8 +249,8 @@ const mediaKeys = [
     'EJECT',
     'PLAY_PAUSE',
     'MUTE',
-    'VOLUME_DECREMEN',
-    'VOLUME_INCREMENTT',
+    'VOLUME_DECREMENT',
+    'VOLUME_INCREMENT',
     'BRIGHTNESS_DECREMENT',
     'BRIGHTNESS_INCREMENT'
 

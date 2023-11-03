@@ -76,3 +76,12 @@ select {
   display: inline-block;
   margin: 0.5vh 0.5vh 0.5vh 0;
 }
+
+.code_box {
+  background-color: aliceblue;
+  width: 70vw;
+  padding: 1vh;
+  margin: 1vh;
+
+  font-weight: 300;
+}
