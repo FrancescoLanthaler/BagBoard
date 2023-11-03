@@ -67,7 +67,7 @@ async def convert_gif(event):
 
     # Output Code
     codestring = f"FRAMES = {gif_image.n_frames}\n"
-    codestring += f'IMAGE_FILE = "/icons/{output_filename}".format(0)\n'
+    codestring += f'IMAGE_FILE = "/icons/{output_filename}"\n'
 
     document.getElementById("imagecode").innerText = codestring
     document.getElementById("anim_code").classList.remove("hidden")
