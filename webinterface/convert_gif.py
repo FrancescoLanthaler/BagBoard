@@ -3,6 +3,7 @@ from pyodide.ffi import create_proxy
 from PIL import Image, ImageFilter
 from os.path import basename
 from pathlib import Path
+from urllib.parse import urlparse
 import io
 
 
@@ -29,9 +30,12 @@ async def convert_gif(event):
     )
 
     if url:
-        output_filename = f"{Path(basename(url)).stem}.bmp"
+        filename = urlparse(url).path
+
     else:
-        output_filename = f"{Path(upload.name).stem}.bmp"
+        filename = upload.name
+
+    output_filename = f"{Path(basename(upload.name)).stem}.bmp"
 
     for frame in range(0, gif_image.n_frames):
         gif_image.seek(frame)
