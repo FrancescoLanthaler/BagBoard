@@ -35,7 +35,7 @@ async def convert_gif(event):
     else:
         filename = upload.name
 
-    output_filename = f"{Path(basename(upload.name)).stem}.bmp"
+    output_filename = f"{Path(basename(filename)).stem}.bmp"
 
     for frame in range(0, gif_image.n_frames):
         gif_image.seek(frame)
