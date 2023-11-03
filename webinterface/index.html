@@ -18,21 +18,17 @@
   <py-config>
     packages = ["Pillow", "matplotlib"]
   </py-config>
-
+  <py-script src="./convert_gif.py"></py-script>
 
 </head>
 
 <body>
-
-  <h1> The ultimate Macropad Customizer </h1>
-  <py-script src="./convert_gif.py"></py-script>
-
-  <!-- Content -->
   <main>
+    <h1>FlexiBoard - Customizable Macropad</h1>
     <div class="inputs">
       <div class="input_row">
-        <label for="file-upload-pillow">Upload a GIF</label>
-        <input type="file" id="file-upload-pillow">
+        <label for="file-upload">Upload a GIF</label>
+        <input type="file" id="file-upload">
         <button id="clear-button" class="download_button button">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-6 h-6">
@@ -63,7 +59,7 @@
         <div class="first_row">
           <div class="display_row">
             <div class="display">
-              <img id="display_image" src="#">
+              <img id="display_image" src="https://shorturl.at/flqxG">
             </div>
           </div>
           <div class="row">

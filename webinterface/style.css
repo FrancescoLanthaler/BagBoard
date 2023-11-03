@@ -15,6 +15,7 @@
   src: url('./fonts/source-sans-3-v10-latin-600.woff2') format('woff2');
 }
 
+/* Global styles */
 *,
 *::before,
 *::after {
@@ -28,39 +29,29 @@ select {
   font-size: 0.8rem;
 }
 
-.download_wrapper {
-  display: inline-block;
-  cursor: not-allowed;
-  text-align: center;
-}
-
-.download_button svg {
-  color: #393939;
-  width: 1.5rem;
-}
-
-/* Download button */
-.download_hidden {
-  display: inline-block;
-  pointer-events: none;
-  opacity: 0.1;
-}
-
 /* Keyboard */
 .keyboard {
   width: 370px;
-  padding: 10px 10px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   border: 2px solid #393939;
   border-radius: 1vh;
-
   margin-bottom: 10px;
 }
 
-/* Display */
+/* Rows */
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.first_row {
+  flex-wrap: wrap;
+}
+
 .display_row {
   display: flex;
   justify-content: end;
@@ -72,8 +63,8 @@ select {
   height: 75px;
   background-color: black;
   border: 2px solid #393939;
+  border-radius: 2px;
   margin: 0 10px 10px 0;
-
 }
 
 .display img {
@@ -113,16 +104,6 @@ select {
   text-decoration: none;
 }
 
-/* Rows */
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
-.first_row {
-  flex-wrap: wrap;
-}
-
 /* Select */
 select {
   display: inline-block;
@@ -156,11 +137,7 @@ input[type=file] {
   background-color: #393939;
 }
 
-.download_button:hover svg{
-  color: white;
-}
-
-
+/* Buttons */
 .button {
   display: inline-block;
   text-decoration: none;
@@ -170,8 +147,30 @@ input[type=file] {
   border-radius: 10px;
 }
 
+.download_button svg {
+  color: #393939;
+  width: 1.5rem;
+}
 
-/* Grid */
+.download_hidden {
+  display: inline-block;
+  pointer-events: none;
+  opacity: 0.1;
+}
+
+.clear-button {
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+  font-size: 1.5rem;
+  font-stretch: ultra-expanded;
+}
+
+.download_button:hover svg{
+  color: white;
+}
+
+/* Grid Inputs*/
 .inputs {
   display: grid;
   gap: 10px;
@@ -188,30 +187,9 @@ input[type=file] {
 
 .input_row input[type=text], .input_row input[type=file] {
   width: 100%;
-}
-
-input[type=text] {
-  width: 20%;
   border: #393939 solid 2px;
   border-radius: 10px;
   padding: 10px;
-}
-
-input[type=file] {
-  width: 20%;
-}
-
-.file-bar input[type=file] {
-  grid-column: 2;
-
-}
-
-.clear-button {
-  background-color: transparent;
-  border: none;
-  font-weight: 600;
-  font-size: 1.5rem;
-  font-stretch: ultra-expanded;
 }
 
 input[type=file]::file-selector-button {

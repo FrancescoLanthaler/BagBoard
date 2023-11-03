@@ -14,17 +14,28 @@ from adafruit_hid.keycode import Keycode
 from adafruit_hid.consumer_control import ConsumerControl
 from adafruit_hid.consumer_control_code import ConsumerControlCode
 
-def invert_colors():
-    temp = icon_pal[0]
-    icon_pal[0] = icon_pal[1]
-    icon_pal[1] = temp
-
 displayio.release_displays()
 
 
 ## CONFIGURATION ##
 # Keys
-keys_pressed = [Keycode.TWO, "hellofahter", Keycode.A, Keycode.FOUR, Keycode.FIVE, Keycode.SIX, Keycode.B, Keycode.SEVEN, Keycode.EIGHT, Keycode.NINE, Keycode.C, Keycode.PERIOD, Keycode.ZERO, Keycode.ENTER, Keycode.D]
+keys_pressed = [
+    Keycode.TWO,
+    Keycode.THREE,
+    Keycode.A,
+    Keycode.FOUR,
+    Keycode.FIVE,
+    Keycode.SIX,
+    Keycode.B,
+    Keycode.SEVEN,
+    Keycode.EIGHT,
+    Keycode.NINE,
+    Keycode.C,
+    Keycode.PERIOD,
+    Keycode.ZERO,
+    Keycode.ENTER,
+    Keycode.D,
+]
 rotary_pressed = ConsumerControlCode.PLAY_PAUSE
 
 # Animation
@@ -68,34 +79,31 @@ for pin in keypress_pins:
 # Initialize key states to False
 key_state = [False] * len(key_pin_array)
 
-# Converted bitmap file - SPRITE Sheet image
-SPRITE_SIZE = (64, 64)
 
+FRAME_SIZE = (64, 64)
 group = displayio.Group()
+bits, colors = adafruit_imageload.load(
+    IMAGE_FILE, bitmap=displayio.Bitmap, palette=displayio.Palette
+)
+colors[0], colors[1] = colors[1], colors[0]  # Swap black and white
 
-# load the spritesheet
-icon_bit, icon_pal = adafruit_imageload.load(IMAGE_FILE,
-                                                    bitmap=displayio.Bitmap,
-                                                    palette=displayio.Palette)
-invert_colors()
+grid = displayio.TileGrid(
+    bits,
+    pixel_shader=colors,
+    width=1,
+    height=1,
+    tile_height=FRAME_SIZE[1],
+    tile_width=FRAME_SIZE[0],
+    default_tile=0,
+    x=32,
+    y=0,
+)
 
-# Cordinates x=32, y=0 To keep icon animation at the center of Display
-icon_grid = displayio.TileGrid(icon_bit, pixel_shader=icon_pal,
-                                    width=1, height=1,
-                                    tile_height=SPRITE_SIZE[1], tile_width=SPRITE_SIZE[0],
-                                    default_tile=0,
-                                    x=32, y=0)
-
-# Append the icon grid to Display(Image) group
-group.append(icon_grid)
-
-# Display SPRITE Sheet image
+group.append(grid)
 display.show(group)
 
-# Timer Variables
-timer = 0
-pointer = 0
-loop = 1
+framerate = 0
+frame = 0
 
 CHANGING_VOLUME = False
 timer_volume = 0
@@ -131,7 +139,7 @@ while True:
 
     # Keyboard
     for i, key_pin in enumerate(key_pin_array):
-        if not key_pin.value:  # Is it grounded?
+        if not key_pin.value:
             if not key_state[i]:  # Has the key not been pressed yet for this pin?
                 key_state[i] = True  # Set key state to pressed
                 print("Pin #%d is grounded." % i)
@@ -139,19 +147,18 @@ while True:
                 key = keys_pressed[i]
                 if isinstance(key, str):
                     keyboard_layout.write(key)
-                else: 
+                else:
                     keyboard.press(key)
-                    keyboard.release_all() 
-  
+                    keyboard.release_all()
+
         else:  # If it's not grounded
             key_state[i] = False  # Reset key state when ungrounded
 
     # Display
     if not CHANGING_VOLUME:
-        if (timer + 0.1) < time.monotonic():
-            icon_grid[0] = pointer
-            pointer += 1
-            timer = time.monotonic()
-            if pointer > FRAMES-1:
-                pointer = 0
-                loop = 0
+        if (framerate + 0.1) < time.monotonic():
+            grid[0] = frame
+            frame += 1
+            framerate = time.monotonic()
+            if frame > FRAMES - 1:
+                frame = 0
