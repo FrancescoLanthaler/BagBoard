@@ -274,7 +274,6 @@ const keyboard_keys = [
 ];
 
 const mediaKeys = [
-    'Custom',
     'RECORD',
     'FAST_FORWARD',
     'REWIND',

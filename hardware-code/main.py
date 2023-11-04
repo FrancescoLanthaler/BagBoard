@@ -60,7 +60,23 @@ last_position = encoder.position
 
 
 # Array of key objects
-keypress_pins = [mcp.get_pin(i) for i in range(2, 16)] + [mcp.get_pin(0)]
+keypress_pins = [
+    mcp.get_pin(2),
+    mcp.get_pin(3),
+    mcp.get_pin(4),
+    mcp.get_pin(5),
+    mcp.get_pin(6),
+    mcp.get_pin(7),
+    mcp.get_pin(8),
+    mcp.get_pin(9),
+    mcp.get_pin(10),
+    mcp.get_pin(11),
+    mcp.get_pin(12),
+    mcp.get_pin(13),
+    mcp.get_pin(14),
+    mcp.get_pin(15),
+    mcp.get_pin(0),
+]
 key_pin_array = []
 
 time.sleep(1)  # Sleep for a bit to avoid a race condition on some systems
@@ -119,14 +135,13 @@ while True:
         timer_volume = time.monotonic()
         for _ in range(position_change):
             consumer.send(ConsumerControlCode.VOLUME_INCREMENT)
-        print(current_position)
     elif position_change < 0:
+        CHANGING_VOLUME = True
         for _ in range(-position_change):
             consumer.send(ConsumerControlCode.VOLUME_DECREMENT)
-        print(current_position)
 
     last_position = current_position
-    if CHANGING_VOLUME and (timer_volume + 0.5) < time.monotonic():
+    if CHANGING_VOLUME and (timer_volume + 1) < time.monotonic():
         CHANGING_VOLUME = False
         print("Volume change ended.")
 
@@ -138,21 +153,23 @@ while True:
         button_state = None
 
     # Keyboard
-    for i, key_pin in enumerate(key_pin_array):
-        if not key_pin.value:
-            if not key_state[i]:  # Has the key not been pressed yet for this pin?
-                key_state[i] = True  # Set key state to pressed
-                print("Pin #%d is grounded." % i)
 
-                key = keys_pressed[i]
-                if isinstance(key, str):
-                    keyboard_layout.write(key)
-                else:
-                    keyboard.press(key)
-                    keyboard.release_all()
+    if not CHANGING_VOLUME:
+        for i, key_pin in enumerate(key_pin_array):
+            if not key_pin.value:
+                if not key_state[i]:  # Has the key not been pressed yet for this pin?
+                    key_state[i] = True  # Set key state to pressed
+                    print("Pin #%d is grounded." % i)
 
-        else:  # If it's not grounded
-            key_state[i] = False  # Reset key state when ungrounded
+                    key = keys_pressed[i]
+                    if isinstance(key, str):
+                        keyboard_layout.write(key)
+                    else:
+                        keyboard.press(key)
+                        keyboard.release_all()
+
+            else:  # If it's not grounded
+                key_state[i] = False  # Reset key state when ungrounded
 
     # Display
     if not CHANGING_VOLUME:
