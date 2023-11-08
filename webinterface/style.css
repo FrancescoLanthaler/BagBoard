@@ -29,6 +29,14 @@ select {
   font-size: 0.8rem;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 /* Keyboard */
 .keyboard {
   width: 370px;
