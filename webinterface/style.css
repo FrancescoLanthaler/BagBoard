@@ -15,6 +15,9 @@
   src: url('./fonts/source-sans-3-v10-latin-600.woff2') format('woff2');
 }
 
+
+
+
 /* Global styles */
 *,
 *::before,
@@ -27,6 +30,8 @@ select {
   font-family: 'Source Sans 3', sans-serif;
   font-weight: 600;
   font-size: 0.8rem;
+
+  --key-border-radius: 20%;
 }
 
 main {
@@ -46,7 +51,7 @@ main {
   align-items: center;
   text-align: center;
   border: 2px solid #393939;
-  border-radius: 1vh;
+  border-radius: 2vh;
   margin-bottom: 10px;
 }
 
@@ -71,7 +76,7 @@ main {
   height: 75px;
   background-color: black;
   border: 2px solid #393939;
-  border-radius: 2px;
+  border-radius: 10px;
   margin: 0 10px 10px 0;
 }
 
@@ -88,19 +93,20 @@ main {
 select {
   width: 70px !important;
   height: 70px !important;
-  border: #393939 solid 2px;
-  border-radius: 10px;
   color: #393939;
-  border-radius: 0.5vh;
+  border: #393939 solid 2px;
+  border-radius: var(--key-border-radius);
   margin: 10px;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  overflow: hidden;
+  word-break: break-all;
   display: flex;
+  overflow: hidden;
   justify-content: center;
   align-items: center;
 }
+
 
 .key_value,
 .rotary {
@@ -109,15 +115,26 @@ select {
   justify-content: center;
   height: 100%;
   width: 100%;
+  padding: 5px;
   text-decoration: none;
 }
+
+.rotary_key {
+  border-radius: 50%;
+}
+
 
 /* Select */
 select {
   display: inline-block;
   margin: 10px !important;
-  border: 3px solid green;
-  z-index: 1;
+  border: 8px solid rgb(69, 194, 69);
+  border-radius: var(--key-border-radius);
+  z-index: 10;
+}
+
+.rotary_key select {
+  border-radius: 50%;
 }
 
 /* Code box */
@@ -155,6 +172,7 @@ input[type=file] {
   border: #393939 solid 2px;
   color: #393939;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .download_button svg {
@@ -184,7 +202,7 @@ input[type=file] {
 .inputs {
   display: grid;
   gap: 10px;
-  width: 50vw;
+  width: 60vw;
   margin-bottom: 2rem;
 }
 
@@ -193,7 +211,13 @@ input[type=file] {
   grid-template-columns: 1fr 3fr 1fr;
   gap: 10px;
   align-items: center;
+  justify-items: center;
 }
+
+.input_row .download_button {
+  justify-self: end;
+}
+
 
 .input_row input[type=text],
 .input_row input[type=file] {

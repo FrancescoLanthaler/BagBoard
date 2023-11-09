@@ -46,7 +46,6 @@ keys.forEach(key => {
             }
         }
 
-
         // Replace the key with the dropdown list
         key.parentNode.replaceChild(dropdown, key);
 
@@ -81,6 +80,8 @@ keys.forEach(key => {
                 dropdown.parentNode.replaceChild(key, dropdown);
             }
         });
+
+
     });
 });
 
