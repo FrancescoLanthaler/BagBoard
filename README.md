@@ -1,4 +1,4 @@
-# FlexiBoard
+# BagBoard
 
 A cool macropad with an easy interface to allow you to change the keybinds to whatever you want!
 
