@@ -2,11 +2,13 @@
 
 A cool macropad with an easy interface to allow you to change the keybinds to whatever you want!
 
+
 ## Get started:
 First of all you will need the pcb and all the components.
 Then you will need to install the libs and the main.py code.
 
 ### In the Web Interface:
+https://bagboard.francescolanthaler.com/
 
 #### Change Keypad Layout:
 Inside the web interface you can reassign each Key to a specific value. 
