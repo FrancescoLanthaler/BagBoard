@@ -60,23 +60,7 @@ last_position = encoder.position
 
 
 # Array of key objects
-keypress_pins = [
-    mcp.get_pin(2),
-    mcp.get_pin(3),
-    mcp.get_pin(4),
-    mcp.get_pin(5),
-    mcp.get_pin(6),
-    mcp.get_pin(7),
-    mcp.get_pin(8),
-    mcp.get_pin(9),
-    mcp.get_pin(10),
-    mcp.get_pin(11),
-    mcp.get_pin(12),
-    mcp.get_pin(13),
-    mcp.get_pin(14),
-    mcp.get_pin(15),
-    mcp.get_pin(0),
-]
+keypress_pins = [mcp.get_pin(i) for i in range(2, 16)] + [mcp.get_pin(0)]
 key_pin_array = []
 
 time.sleep(1)  # Sleep for a bit to avoid a race condition on some systems
