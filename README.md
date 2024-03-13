@@ -35,20 +35,8 @@ IMAGE_FILE = "/icons/FILENAMEHERE.bmp".format(0)
 
 ## License:
 
-Copyright 2023 Francesco Lanthaler
+Copyright 2024 Francesco Lanthaler
+This project includes code from libraries that are licensed under various open-source licenses. 
 
-## Licensing
 
-This project includes code from libraries that are licensed under various open-source licenses. Part of the code is subject to the Mozilla Public License 2.0 (MPL 2.0).
 
-### Mozilla Public License 2.0 (MPL 2.0)
-
-- Portions of this project are subject to MPL 2.0. You can find the full text of the MPL 2.0 license [here](http://www.mozilla.org/MPL/2.0/).
-
-### Attribution
-
-- The following libraries are used in this project and are subject to MPL 2.0:
-  - [Library Name](link to library's source code and license)
-  - ...
-
-Please make sure to review the respective library's source code and license for more details.
