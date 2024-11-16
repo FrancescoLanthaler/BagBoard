@@ -23,23 +23,7 @@ async def convert_gif(event):
     bytes_list = bytearray(buff)
     bytes_stream = io.BytesIO(bytes_list)
     gif_image = Image.open(bytes_stream)
-    width, height = gif_image.size
-
-    # Calculate the new size maintaining the aspect ratio
-    if height > 64:
-        ratio = 64 / height
-        new_height = 64
-        new_width = int(width * ratio)
-    else:
-        new_height = height
-        new_width = width
-
-    if new_width > 128:
-        ratio = 128 / new_width
-        new_width = 128
-        new_height = int(new_height * ratio)
-
-    OUTPUT_SIZE = (new_width, new_height)
+    OUTPUT_SIZE = (64, 128)
 
     # Create PIL image from np array
     output_image = Image.new(
