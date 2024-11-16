@@ -23,7 +23,7 @@ async def convert_gif(event):
     bytes_list = bytearray(buff)
     bytes_stream = io.BytesIO(bytes_list)
     gif_image = Image.open(bytes_stream)
-    OUTPUT_SIZE = (128, 64)
+    OUTPUT_SIZE = (64, 64)
 
     # Create PIL image from np array
     output_image = Image.new(
