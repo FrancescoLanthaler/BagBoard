@@ -9,7 +9,7 @@ clearButton.addEventListener('click', clearUpload);
 
 // Your existing clearUpload function
 function clearUpload() {
-    const file = document.getElementById('file-upload-pillow');
+    const file = document.getElementById('file-upload');
     file.value = '';
 }
 

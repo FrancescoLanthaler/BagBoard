@@ -1,21 +1,30 @@
-from js import document, Uint8Array, window, File
-from pyodide.ffi import create_proxy
-from PIL import Image, ImageFilter
+import io
 from os.path import basename
 from pathlib import Path
 from urllib.parse import urlparse
-import io
 
+from js import File, Object, Uint8Array, document, window
+from PIL import Image, ImageFilter
+from pyodide.ffi import create_proxy, to_js
 
 # The output size of each frame (or tile or Sprite) of the animation
 OUTPUT_SIZE = (64, 64)
+
+
+def giphy_media_url(url):
+    # giphy.com/gifs/<slug>-<id> is an HTML page; the actual GIF lives on media.giphy.com
+    parsed = urlparse(url)
+    if parsed.netloc not in ("giphy.com", "www.giphy.com"):
+        return url
+    gif_id = parsed.path.rstrip("/").split("/")[-1].split("-")[-1]
+    return f"https://media.giphy.com/media/{gif_id}/giphy.gif"
 
 
 async def convert_gif(event):
     if event.target.files:
         upload = event.target.files.item(0)
 
-    url = document.getElementById("gif-url").value
+    url = giphy_media_url(document.getElementById("gif-url").value.strip())
     if url:
         upload = await window.fetch(url)
 
@@ -48,7 +57,9 @@ async def convert_gif(event):
     output_image.save(bytes, format="BMP", mode="1")
 
     image_file = File.new(
-        [Uint8Array.new(bytes.getvalue())], output_filename, {type: "image/bmp"}
+        [Uint8Array.new(bytes.getvalue())],
+        output_filename,
+        to_js({"type": "image/bmp"}, dict_converter=Object.fromEntries),
     )
 
     download_link = document.getElementById("download_link")
@@ -76,3 +87,8 @@ async def convert_gif(event):
 convert_file = create_proxy(convert_gif)
 document.getElementById("file-upload").addEventListener("change", convert_file)
 document.getElementById("gif-url").addEventListener("input", convert_file)
+
+if document.getElementById("gif-url").value:
+    document.getElementById("gif-url").dispatchEvent(window.Event.new("input"))
+elif document.getElementById("file-upload").files.length:
+    document.getElementById("file-upload").dispatchEvent(window.Event.new("change"))

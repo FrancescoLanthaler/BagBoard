@@ -13,12 +13,9 @@
   </script>
 
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-  <py-config>
-    packages = ["Pillow", "matplotlib"]
-  </py-config>
-  <py-script src="./convert_gif.py"></py-script>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+  <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+  <script type="py" src="./convert_gif.py" config='{"packages": ["Pillow"]}'></script>
 
 </head>
 
@@ -59,7 +56,7 @@
         <div class="first_row">
           <div class="display_row">
             <div class="display">
-              <img id="display_image" src="https://shorturl.at/flqxG">
+              <img id="display_image" src="https://media.giphy.com/media/xThta2LP5qF9mFFKoM/giphy.gif" alt="Display animation preview">
             </div>
           </div>
           <div class="row">
